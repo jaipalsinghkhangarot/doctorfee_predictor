@@ -43,33 +43,3 @@ def pred_acc(YPred,fees):
 
 pred_acc(pred,fees)
 
-
-
-
-#testing with test data
-
-test_data=pd.DataFrame(pd.read_excel('Final_Test.xlsx'))
-test_data = test_data.drop(['Rating'],axis = 1).copy()
-columns=test_data.columns
-print(columns)
-for i in range(len(columns)):
-  unique = (list(set(test_data[columns[i]])))
-  numUnique = []
-  for j in range(0,len(unique)):
-    numUnique.append(j)
-
-  test_data[columns[i]] = test_data[columns[i]].replace(unique,numUnique)
-
-#print(test_data.head)
-fees_data=pd.DataFrame(pd.read_excel('Sample_Submission.xlsx'))
-fees_value=fees_data['Fees']
-#print(fees_data.head)
-test_pred = reg.predict(test_data)
-def pred_acc(YPred,fees_value):
-  mse = np.mean((YPred-fees_value)**2)
-  totalErr = np.mean((fees_value)**2)
-  
-  print (100 - ((mse/totalErr)*100))
-
-pred_acc(test_pred,fees_value)
-
